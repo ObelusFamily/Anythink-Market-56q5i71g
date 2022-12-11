@@ -19,5 +19,9 @@ def get_slug_for_item(title: str) -> str:
     return slugify(title)
 
 
+def get_title_for_item(title: str) -> str:
+    return title
+
+
 def check_user_can_modify_item(item: Item, user: User) -> bool:
     return item.seller.username == user.username
