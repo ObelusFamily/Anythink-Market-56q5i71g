@@ -19,7 +19,7 @@ from app.services.items import check_user_can_modify_item
 
 
 def get_items_filters(
-    title:Optional[str] = None,
+    title: Optional[str] = None,
     tag: Optional[str] = None,
     seller: Optional[str] = None,
     favorited: Optional[str] = None,
@@ -43,20 +43,6 @@ async def get_item_by_slug_from_path(
 ) -> Item:
     try:
         return await items_repo.get_item_by_slug(slug=slug, requested_user=user)
-    except EntityDoesNotExist:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=strings.ITEM_DOES_NOT_EXIST_ERROR,
-        )
-
-
-async def get_item_by_title_from_path(
-    title: str = Path(..., min_length=1),
-    user: Optional[User] = Depends(get_current_user_authorizer(required=False)),
-    items_repo: ItemsRepository = Depends(get_repository(ItemsRepository)),
-) -> Item:
-    try:
-        return await items_repo.get_item_by_title(title=title, requested_user=user)
     except EntityDoesNotExist:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
